@@ -1,65 +1,61 @@
-import React, { useState } from 'react';
-import axios from 'axios'; // Importar axios
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function Login({ onLoginSuccess }) { // Afegim la funció onLoginSuccess com a prop
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+const Login = () => {
+  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setErrorMessage(''); // Netejar el missatge d'error previ
-    console.log('Submitting:', username, password); // Imprimir a la consola les dades
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage(""); // Reseteja error anterior
 
     try {
-      // Feu la sol·licitud POST al backend
-      const response = await axios.post('http://localhost:8080/auth/login', 
-        { username, password }, 
-        { withCredentials: true } // Assegura't que les cookies/credencials s'enviïn amb la sol·licitud
-      );
+      const response = await axios.post("http://localhost:8080/auth/login", formData, {
+        withCredentials: true, // Assegura l'ús de cookies
+      });
 
       const { token } = response.data;
-
-      // Manejar login correcte aquí
-      console.log('Login successful:', response.data);
-      localStorage.setItem('token', token); // Guardar el token al localStorage
-
-      // Cridem la funció onLoginSuccess passada com a prop per actualitzar l'estat a l'App.js
-      onLoginSuccess();
-
-      navigate('/home'); // Redirigir a la pàgina principal
+      localStorage.setItem("token", token); // Desa el token al localStorage
+      navigate("/pets"); // Redirigeix a la pàgina de mascotes
     } catch (error) {
-      console.error('Error during authentication', error);
-      setErrorMessage('Login failed: ' + (error.response ? error.response.data.message : error.message)); // Mostrar error
+      const errorMsg = error.response?.data?.message || "Error during login.";
+      setErrorMessage(errorMsg); // Mostra l'error retornat pel servidor
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <div>
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
+          name="username"
           placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={formData.username}
+          onChange={handleChange}
         />
-      </div>
-      <div>
         <input
           type="password"
+          name="password"
           placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData.password}
+          onChange={handleChange}
         />
-      </div>
-      <button type="submit">Login</button>
-
-      {/* Mostrar missatge d'error si el login falla */}
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-    </form>
+        <button type="submit">Login</button>
+      </form>
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+      <p>
+        No tens un compte?{" "}
+        <button onClick={() => navigate("/register")}>Registra't</button>
+      </p>
+    </div>
   );
-}
+};
 
 export default Login;

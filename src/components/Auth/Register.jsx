@@ -1,46 +1,61 @@
-// src/components/Auth/Register.jsx
-import React, { useState } from 'react';
-import { signup } from '../../api/authService'; // Importa la funció de registre des de l'API
+import React, { useState } from "react";
+import axios from "axios"; // Utilitza axios per fer la sol·licitud a l'API
+import { useNavigate } from "react-router-dom";
 
-function Register() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+const Register = () => {
+  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    console.log("Registering with", username, password);
-    setErrorMessage(''); // Reseteja el missatge d'error abans de fer el submit
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage(""); // Reseteja error anterior
 
     try {
-      // Crida a la funció de registre
-      await signup(username, password);
-      // Si el registre és correcte, pots redirigir l'usuari al login
-      alert('Registration successful! Please log in.');
-      window.location.href = '/login';  // Redirigeix a la pàgina de login
+      await axios.post("http://localhost:8080/auth/register", formData, {
+        withCredentials: true, // Per enviar credencials si és necessari
+      });
+
+      alert("Registration successful! Please log in.");
+      navigate("/login"); // Redirigeix a la pàgina de login
     } catch (error) {
-      setErrorMessage('Registration failed: ' + error.message);
+      const errorMsg = error.response?.data?.message || "Error during registration.";
+      setErrorMessage(errorMsg); // Mostra l'error retornat pel servidor
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Register</button>
-      {errorMessage && <p>{errorMessage}</p>}
-    </form>
+    <div>
+      <h2>Register</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={handleChange}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+        />
+        <button type="submit">Register</button>
+      </form>
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+      <p>
+        Ja tens un compte?{" "}
+        <button onClick={() => navigate("/login")}>Inicia sessió</button>
+      </p>
+    </div>
   );
-}
+};
 
 export default Register;
+

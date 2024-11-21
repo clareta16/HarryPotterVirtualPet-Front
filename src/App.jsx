@@ -1,59 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import Login from './components/Auth/Login';
-import Register from './components/Auth/Register';
-import Home from './components/Home'; // Component de la pàgina principal
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import Home from "./components/Home";
+import CreatePet from "./components/CreatePet";
+import ViewPets from "./components/ViewPets";
+import AuthPage from './components/Auth/AuthPage';
 
 function App() {
-  const navigate = useNavigate(); // useNavigate per a la redirecció programàtica
-  const [showLogin, setShowLogin] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Estat per controlar si l'usuari està loguejat
-  
-  // Funció per comprovar si l'usuari ja està loguejat mitjançant el token
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true);  // L'usuari ja està loguejat, actualitzem l'estat
-      navigate('/home'); // Redirigim a la pàgina principal
-    }
-  }, [navigate]);
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Funció per manejar l'èxit del login
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);  // Quan l'usuari fa login amb èxit, actualitzem l'estat
-    navigate('/home'); // Redirigim a la pàgina principal
+  // Comprovar si l'usuari està loguejat
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token && !isLoggedIn) {
+      setIsLoggedIn(true);
+      navigate("/home"); // Redirigeix a Home només si no estem loguejats
+    } else if (!token && isLoggedIn) {
+      setIsLoggedIn(false);
+      navigate("/"); // Redirigeix a la pàgina de login si no hi ha token
+    }
+  }, [navigate, isLoggedIn]); // Afegim `isLoggedIn` per evitar redireccions innecessàries
+
+  // Gestió del logout
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/");
   };
 
   return (
     <div className="App">
-      {/* Mostrar el títol només si l'usuari no està loguejat */}
-      {!isLoggedIn && (
-        <h1>Welcome to the Harry Potter Virtual Pet App</h1>
-      )}
-
-      {/* Mostrar el formulari de login o registre en funció de l'estat */}
+      {isLoggedIn} {/* Navbar només si està loguejat */}
       <Routes>
-        <Route 
-          path="/" 
-          element={showLogin ? (
-            <Login onLoginSuccess={handleLoginSuccess} />  // Passa la funció de login amb èxit
-          ) : (
-            <Register />
-          )}
+        {/* Rutes d'autenticació */}
+        <Route
+          path="/"
+          element={
+            isLoggedIn ? (
+              <Home /> // Si està loguejat, enviar a home
+            ) : (
+              <AuthPage /> // Pàgina d'autenticació
+            )
+          }
         />
-
-        <Route path="/home" element={<Home />} />
+        {/* Rutes protegides */}
+        {isLoggedIn && (
+          <>
+            <Route path="/home" element={<Home />} />
+            <Route path="/create-pet" element={<CreatePet />} />
+            <Route path="/view-pets" element={<ViewPets />} />
+          </>
+        )}
       </Routes>
-
-      {/* Botons per alternar entre Login i Register (només visibles si no està loguejat) */}
-      {!isLoggedIn && (
-        <button 
-          onClick={() => setShowLogin(!showLogin)}
-          style={{ marginTop: '20px', padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}
-        >
-          {showLogin ? 'Go to Register' : 'Go to Login'}
-        </button>
-      )}
     </div>
   );
 }
