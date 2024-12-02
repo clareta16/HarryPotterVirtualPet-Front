@@ -1,6 +1,6 @@
-VirtualPet App
-Description
-VirtualPet App is a Harry Potter-themed application that lets users create, view, and interact with their own magical virtual pets. Users can name their pets, assign types, customize their colors, and take care of them by feeding, training, and resting them. The app also includes fun Harry Potter-inspired features, like joining the Dark Lord’s army or playing Quidditch.
+Harry Potter VirtualPet App Description
+
+Harry Potter VirtualPet App is a Harry Potter-themed application that lets users create, view, and interact with their own magical virtual pets. Users can name their pets, assign types, customize their colors, and take care of them by feeding, training, and resting them. The app also includes fun Harry Potter-inspired features, like joining the Dark Lord’s army or playing Quidditch.
 
 This application provides a playful and engaging way to interact with pets, with features such as progress bars for hunger, sleep, and training levels. It's built with modern web technologies and styled with a magical touch inspired by the Wizarding World.
 
