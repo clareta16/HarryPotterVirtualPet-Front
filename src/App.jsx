@@ -92,7 +92,7 @@ function App() {
               <div className="dark-lord-container">
                 <h1 className="dark-lord-heading">Welcome to the Dark Lord's Army!</h1>
                 <img 
-                  src="assets/pets/darklord.gif" 
+                  src="/assets/pets/darklord.gif" 
                   className="dark-lord-gif"
                 />
               </div>
@@ -106,7 +106,7 @@ function App() {
                 {showQuidditchGif && (
                   <div className="quidditch-gif-container">
                     <img 
-                      src="assets/pets/quidditch.gif" 
+                      src="/assets/pets/quidditch.gif" 
                       alt="Quidditch Game" 
                       className="quidditch-gif"
                     />

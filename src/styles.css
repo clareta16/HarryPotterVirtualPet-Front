@@ -196,76 +196,7 @@
     position: relative;
   }
   
-  .symbol {
-    position: absolute;
-    top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 250px;
-    height: 210px;
-  }
   
-  .deathly {
-    position: absolute;
-    bottom: 7px;
-    left: 50%;
-    width: 230px;
-    height: 5px;
-    background-color: white;
-    border-radius: 7px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-    transform: translateX(-50%);
-    z-index: 10;
-  }
-  
-  .deathly:before,
-  .deathly:after {
-    position: absolute;
-    content: '';
-    bottom: -14px;
-    width: 5px;
-    height: 224px;
-    background-color: white;
-    border-radius: 7px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-    z-index: 11;
-  }
-  
-  .deathly:before {
-    left: 56px;
-    transform: rotate(30.75deg);
-  }
-  
-  .deathly:after {
-    right: 56px;
-    transform: rotate(-30.5deg);
-  }
-  
-  .hallows {
-    position: absolute;
-    bottom: 7px;
-    left: 50%;
-    width: 130px;
-    height: 130px;
-    border: 5px solid white;
-    border-radius: 50%;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-    transform: translateX(-50%);
-  }
-  
-  .hallows:before {
-    position: absolute;
-    content: '';
-    top: -68px;
-    left: 50%;
-    width: 5px;
-    height: 190px;
-    background-color: white;
-    border-radius: 7px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-    transform: translateX(-50%);
-  }
   
   h1 {
     color: white;
@@ -285,7 +216,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1; /* Ensure it is above the background */
     width: 350px;
-    margin-top: 200px; /* Adjust based on your layout */
+    margin-top: 150px; /* Adjust based on your layout */
   }
   
   .create-pet-form {
@@ -329,6 +260,56 @@
     text-align: center;
     margin-top: 10px;
   }
+
+  /* Style for the main heading (Your Pets) */
+h2 {
+    font-family: 'Roboto', sans-serif; /* Use any font you prefer */
+    font-size: 32px;  /* Adjust size as needed */
+    font-weight: bold;  /* Make the heading bold */
+    color: #2ecc71;  /* Green color */
+    text-align: center;  /* Center the heading */
+    margin-bottom: 20px;
+  }
+  
+  /* Style for the pet name (h3) */
+  .pet-container h3 {
+    font-family: 'Arial', sans-serif;  /* Choose a different font */
+    font-size: 24px;
+    font-weight: 600;
+    color: #3498db;  /* Blue color */
+    text-align: center;  /* Center pet name */
+    margin: 10px 0;
+  }
+  
+  /* Style for the pet details (Type and Colour) */
+  .pet-container p {
+    font-family: 'Georgia', serif;  /* Different font for paragraphs */
+    font-size: 18px;
+    font-weight: normal;
+    color: #555;  /* Dark grey color for the details */
+    text-align: center;  /* Center the text */
+    margin: 5px 0;
+  }
+  
+  /* Optional: Add a border and padding around each pet */
+  .pet-container {
+    border: 2px solid #3498db;  /* Blue border for each pet container */
+    padding: 20px;
+    border-radius: 8px;  /* Rounded corners */
+    margin: 10px 0;
+    background-color: #f0f8ff;  /* Light background color for better readability */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Add subtle shadow */
+  }
+  
+  /* Style for error message */
+  p[style="color: red"] {
+    font-size: 18px;
+    color: red;
+    text-align: center;  /* Center the error message */
+    font-weight: bold;
+  }
+  
+  
   
 
   

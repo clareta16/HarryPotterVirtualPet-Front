@@ -110,100 +110,94 @@ function ViewPets() {
       }
     }
   
-  return (
-    <div>
-      <h2>Your Pets</h2>
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+    return (
       <div>
-        {pets.length > 0 ? (
-          pets.map((pet) => (
-            <div className="pet-container" 
-            key={pet.id}
-        
-              >
-              <h3>{pet.name}</h3>
-              <p>Type: {pet.petType}</p>
-              <p>Colour: {pet.colour}</p>
-
-              {/* Pet GIF */}
-              <img
-                src={pet.currentGif}
-                alt={`${pet.petType} - ${pet.name}`}
-                className="pet-gif"
-                style={{
-                  border: `8px solid ${getPastelColor(pet.colour)}`, // Apply colored border
-                  borderRadius: "10px", // Optional: Rounded corners for the GIF
-                }}
-              />
-
-              {/* Hunger Level */}
-              <div>
-                <label>Hunger Level: {pet.hungryLevel}%</label>
-                <progress
-                  value={pet.hungryLevel}
-                  max="100"
-                  style={{ 
-                    width: "100%",
-                    color: getProgressBarColor(pet.colour),
-                   }}
-                ></progress>
+        <h2>Your Pets</h2>
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+        <div>
+          {pets.length > 0 ? (
+            pets.map((pet) => (
+              <div className="pet-container" key={pet.id}>
+                <h3>{pet.name}</h3>
+                <p>Type: {pet.petType}</p>
+                <p>Colour: {pet.colour}</p>
+    
+                {/* Pet GIF */}
+                <img
+                  src={pet.currentGif}
+                  alt={`${pet.petType} - ${pet.name}`}
+                  className="pet-gif"
+                  style={{
+                    border: `8px solid ${getPastelColor(pet.colour)}`, // Apply colored border
+                    borderRadius: "10px", // Optional: Rounded corners for the GIF
+                  }}
+                />
+    
+                {/* Hunger Level */}
+                <div>
+                  <label>Hunger Level: {pet.hungryLevel}%</label>
+                  <progress
+                    value={pet.hungryLevel}
+                    max="100"
+                    style={{
+                      width: "100%",
+                      color: getProgressBarColor(pet.colour),
+                    }}
+                  ></progress>
+                </div>
+    
+                {/* Sleep Level */}
+                <div>
+                  <label>Sleep Level: {pet.sleepLevel}%</label>
+                  <progress
+                    value={pet.sleepLevel}
+                    max="100"
+                    style={{
+                      width: "100%",
+                      color: getProgressBarColor(pet.colour),
+                    }}
+                  ></progress>
+                </div>
+    
+                {/* Combat Level */}
+                <div>
+                  <label>Training Level: {pet.combatLevel}%</label>
+                  <progress
+                    value={pet.combatLevel}
+                    max="100"
+                    style={{
+                      width: "100%",
+                      color: getProgressBarColor(pet.colour),
+                    }}
+                  ></progress>
+                  {pet.combatLevel === 100 && (
+                    <p style={{ color: "green", fontWeight: "bold" }}>
+                      Ready to fight the Dark Lord!
+                    </p>
+                  )}
+                </div>
+    
+                {/* Action Buttons */}
+                <div className="pet-buttons">
+                  <button onClick={() => handlePetAction(pet.id, "EAT")}>Eat</button>
+                  <button onClick={() => handlePetAction(pet.id, "SLEEP")}>Sleep</button>
+                  <button onClick={() => handlePetAction(pet.id, "TRAIN")}>Train</button>
+                  <button
+                    onClick={() => handleDeletePet(pet.id)}
+                    className="delete-button"
+                  >
+                    Delete Pet
+                  </button>
+                </div>
               </div>
-
-              {/* Sleep Level */}
-              <div>
-                <label>Sleep Level: {pet.sleepLevel}%</label>
-                <progress
-                  value={pet.sleepLevel}
-                  max="100"
-                  style={{ 
-                    width: "100%",
-                    color: getProgressBarColor(pet.colour), }}
-                ></progress>
-              </div>
-
-              {/* Combat Level */}
-              <div>
-                <label>Training Level: {pet.combatLevel}%</label>
-                <progress
-                  value={pet.combatLevel}
-                  max="100"
-                  style={{ 
-                    width: "100%",
-                    color: getProgressBarColor(pet.colour), }}
-                ></progress>
-                {pet.combatLevel === 100 && (
-                  <p style={{ color: "green", fontWeight: "bold" }}>
-                    Ready to fight the Dark Lord!
-                  </p>
-                )}
-              </div>
-
-              {/* Action Buttons */}
-              <div className="pet-buttons">
-                <button onClick={() => handlePetAction(pet.id, 'EAT')}>
-                  Eat
-                </button>
-                <button onClick={() => handlePetAction(pet.id, 'SLEEP')}>
-                  Sleep
-                </button>
-                <button onClick={() => handlePetAction(pet.id, 'TRAIN')}>
-                  Train
-                </button>
-                <button
-                  onClick={() => handleDeletePet(pet.id)}
-                  className="delete-button"
-                >
-                  Delete Pet
-                </button>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>No pets available.</p>
-        )}
+            ))
+          ) : (
+            <p>No pets available.</p>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+    
 }
 
 export default ViewPets;

@@ -52,7 +52,6 @@ function CreatePet({ onPetCreated }) {
         <div className="deathly"></div>
         <div className="hallows"></div>
       </div>
-      <h1>H<i className="fa fa-bolt" aria-hidden="true"></i>P</h1>
       
       <div className="form-container">
         <h2>Create Your Pet</h2>
