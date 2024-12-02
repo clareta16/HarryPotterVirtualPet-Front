@@ -6,9 +6,13 @@ export const getAllPets = async () => {
   return axiosInstance.get('/pets');
 };
 
-export const createPet = async (petData) => {
-  const response = await axiosInstance.post('/pets/create', petData); // Ara no necessitem passar el token explícitament
-  return response.data;
+export const createPet = async (petData, token) => {
+  const response = await axiosInstance.post('/pets/create', petData, {
+    headers: {
+      'Authorization': `Bearer ${token}` // Pass the token in the header if required
+    }
+  });
+  return response.data; // Return the created pet data
 };
 
 export const deletePet = async (petId) => {

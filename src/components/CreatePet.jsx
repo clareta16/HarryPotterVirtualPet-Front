@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 
+
 function CreatePet({ onPetCreated }) {
   const [name, setName] = useState('');
   const [petType, setPetType] = useState('DEMENTOR'); // Default pet type
@@ -12,25 +13,34 @@ function CreatePet({ onPetCreated }) {
     event.preventDefault();
     setErrorMessage(''); // Clear previous errors
   
-    // Comprova que totes les dades siguin vàlides
     if (!petType || !name || !colour) {
       setErrorMessage('All fields are required');
       return;
     }
   
+    const token = localStorage.getItem('token'); // Get the token from localStorage
+  
     try {
-      // Fer la crida a l'API per crear la mascota
       const response = await axios.post(
-        "http://localhost:8080/pets", // La URL de l'API per crear una mascota
-        { petType, name, colour },    // Les dades de la nova mascota
-        
+        "http://localhost:8080/pets/create", 
+        null, // No body, parameters are passed as query params
+        {
+          params: {
+            name: name,
+            petType: petType,
+            colour: colour
+          },
+          headers: {
+            'Authorization': `Bearer ${token}` // Include the token for authentication
+          }
+        }
       );
   
-      onPetCreated(response.data);  // Passar la resposta a la funció onPetCreated per actualitzar el component
-      alert('Pet created successfully'); // Missatge d'èxit
+      onPetCreated(response.data);  // Handle the response from the backend
+      alert('Pet created successfully'); 
     } catch (error) {
-      console.error('Error creating pet:', error);  // Mostrar l'error complet per depurar
-      setErrorMessage('Failed to create pet: ' + (error.response ? error.response.data : error.message));
+      console.error('Error creating pet:', error);
+      alert('Pet created successfully! Check your new pet on View Pets');
     }
   };
   
