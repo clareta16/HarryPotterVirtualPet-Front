@@ -37,22 +37,25 @@ function App() {
     <div className="App">
       {/* Mostrar les icones de Harry Potter només quan estem a la pàgina Home */}
       {location.pathname === "/home" && <HarryPotterCharacters />}
-      <div className="container">
-  <div className="hp-character griffindor" role="img" aria-label="Harry Potter">
-    <button onClick={() => navigate("/create-pet")} className="create-pet-btn">Create Pet</button>
-  </div>
-  <div className="hp-character slytherin" role="img" aria-label="Draco Malfoy">
-    <button onClick={() => navigate("/join-dark-lord")} className="join-dark-lord-btn">Join Dark Lord</button>
-  </div>
-  <div className="hp-character ravenclaw" role="img" aria-label="Luna Lovegood">
-    <button onClick={() => navigate("/view-pets")} className="view-pets-btn">View All Pets</button>
-  </div>
-  <div className="hp-character hufflepuff" role="img" aria-label="Cedric Diggory">
-    <button onClick={() => alert("Play Quidditch!")} className="quidditch-btn">Play Quidditch</button>
-  </div>
-</div>
 
-      
+      {/* Conditionally render these buttons only if we are on the Home page */}
+      {location.pathname === "/home" && (
+        <div className="container">
+          <div className="hp-character griffindor" role="img" aria-label="Harry Potter">
+            <button onClick={() => navigate("/create-pet")} className="create-pet-btn">Create Pet</button>
+          </div>
+          <div className="hp-character slytherin" role="img" aria-label="Draco Malfoy">
+            <button onClick={() => navigate("/join-dark-lord")} className="join-dark-lord-btn">Join Dark Lord</button>
+          </div>
+          <div className="hp-character ravenclaw" role="img" aria-label="Luna Lovegood">
+            <button onClick={() => navigate("/view-pets")} className="view-pets-btn">View All Pets</button>
+          </div>
+          <div className="hp-character hufflepuff" role="img" aria-label="Cedric Diggory">
+            <button onClick={() => alert("Play Quidditch!")} className="quidditch-btn">Play Quidditch</button>
+          </div>
+        </div>
+      )}
+
       <nav>
         <button onClick={() => navigate("/home")} style={{ marginRight: '10px' }}>Home</button>
         {isLoggedIn ? (
@@ -79,7 +82,15 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/create-pet" element={<CreatePet />} />
             <Route path="/view-pets" element={<ViewPets />} />
-            <Route path="/join-dark-lord" element={<div>Welcome to the Dark Lord's Army!</div>} />
+            <Route path="/join-dark-lord" element={
+              <div className="dark-lord-container">
+                <h1 className="dark-lord-heading">Welcome to the Dark Lord's Army!</h1>
+                <img 
+                  src="public/assets/pets/darklord.gif" 
+                  className="dark-lord-gif"
+                />
+              </div>
+            } />
           </>
         )}
       </Routes>
