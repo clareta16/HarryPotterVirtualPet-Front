@@ -40,7 +40,6 @@ function ViewPets() {
   
     try {
       // Assuming interactWithPet sends the `petAction` as a query parameter
-      const action = 'EAT';
       const response = await axios.put(`http://localhost:8080/pets/${petId}?petAction=${action}`, {}, {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -181,14 +180,14 @@ function ViewPets() {
 
               {/* Action Buttons */}
               <div className="pet-buttons">
-                <button onClick={() => handlePetAction(pet.id, "eat")}>
+                <button onClick={() => handlePetAction(pet.id, 'EAT')}>
                   Eat
                 </button>
-                <button onClick={() => handlePetAction(pet.id, "sleep")}>
+                <button onClick={() => handlePetAction(pet.id, 'SLEEP')}>
                   Sleep
                 </button>
-                <button onClick={() => handlePetAction(pet.id, "fight")}>
-                  Fight
+                <button onClick={() => handlePetAction(pet.id, 'TRAIN')}>
+                  Train
                 </button>
                 <button
                   onClick={() => handleDeletePet(pet.id)}
