@@ -13,20 +13,26 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation(); 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showQuidditchGif, setShowQuidditchGif] = useState(false);
+
+  // Toggle the GIF visibility
+  const handleQuidditchClick = () => {
+    setShowQuidditchGif(!showQuidditchGif); // Toggle visibility of the GIF
+  };
 
   // Comprovar si l'usuari està loguejat
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token && !isLoggedIn) {
       setIsLoggedIn(true);
-      navigate("/home"); // Redirigeix a Home només si no estem loguejats
+      navigate("/home"); // Redirect to Home if the user is logged in
     } else if (!token && isLoggedIn) {
       setIsLoggedIn(false);
-      navigate("/"); // Redirigeix a la pàgina de login si no hi ha token
+      navigate("/"); // Redirect to login if no token is found
     }
   }, [navigate, isLoggedIn]);
 
-  // Gestió del logout
+  // Handle logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
@@ -35,10 +41,10 @@ function App() {
 
   return (
     <div className="App">
-      {/* Mostrar les icones de Harry Potter només quan estem a la pàgina Home */}
+      {/* Show Harry Potter characters only when we're on the home page */}
       {location.pathname === "/home" && <HarryPotterCharacters />}
 
-      {/* Conditionally render these buttons only if we are on the Home page */}
+      {/* Conditionally render buttons on the Home page */}
       {location.pathname === "/home" && (
         <div className="container">
           <div className="hp-character griffindor" role="img" aria-label="Harry Potter">
@@ -51,7 +57,7 @@ function App() {
             <button onClick={() => navigate("/view-pets")} className="view-pets-btn">View All Pets</button>
           </div>
           <div className="hp-character hufflepuff" role="img" aria-label="Cedric Diggory">
-            <button onClick={() => alert("Play Quidditch!")} className="quidditch-btn">Play Quidditch</button>
+            <button onClick={() => navigate("/play-quidditch")} className="quidditch-btn">Play Quidditch</button>
           </div>
         </div>
       )}
@@ -71,12 +77,12 @@ function App() {
       </nav>
 
       <Routes>
-        {/* Rutes d'autenticació */}
+        {/* Authentication routes */}
         <Route path="/" element={<AuthPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         
-        {/* Rutes protegides */}
+        {/* Protected Routes */}
         {isLoggedIn && (
           <>
             <Route path="/home" element={<Home />} />
@@ -86,9 +92,26 @@ function App() {
               <div className="dark-lord-container">
                 <h1 className="dark-lord-heading">Welcome to the Dark Lord's Army!</h1>
                 <img 
-                  src="public/assets/pets/darklord.gif" 
+                  src="assets/pets/darklord.gif" 
                   className="dark-lord-gif"
                 />
+              </div>
+            } />
+
+            {/* Route for Play Quidditch button */}
+            <Route path="/play-quidditch" element={
+              <div className="quidditch-container">
+                
+                {/* Conditional rendering for the Quidditch GIF */}
+                {showQuidditchGif && (
+                  <div className="quidditch-gif-container">
+                    <img 
+                      src="assets/pets/quidditch.gif" 
+                      alt="Quidditch Game" 
+                      className="quidditch-gif"
+                    />
+                  </div>
+                )}
               </div>
             } />
           </>
@@ -99,3 +122,5 @@ function App() {
 }
 
 export default App;
+
+

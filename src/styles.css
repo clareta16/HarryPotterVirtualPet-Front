@@ -88,7 +88,7 @@
     font-family: 'Arial', sans-serif;
     text-transform: uppercase;
     letter-spacing: 5px;
-    color: #ff0000;
+    color: #f2eded;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
   }
   
@@ -97,6 +97,24 @@
     margin-top: 20px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Optional: Styling for Quidditch GIF */
+.quidditch-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .quidditch-gif-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .quidditch-gif {
+    width: 50%; /* Adjust the size as needed */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   }
 
   
